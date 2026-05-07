@@ -33,7 +33,7 @@ class study():
                     'user_display': user_name,
                 }
             )
-            study.save(chat_data)
+            study.save(chat)
         else:return failure_chat_text
 
     def delete_keyword(keyword: str, index: int):
@@ -45,4 +45,6 @@ class study():
 
     def get(keyword):
         if keyword in default_chat_data:
-            return  
+            return default_chat_data[keyword]
+        elif keyword in chat:
+            return 

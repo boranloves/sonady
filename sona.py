@@ -44,9 +44,11 @@ class study():
             return f'{keyword}의 {index}번째 항목을 삭제하였습니다.'
         else:return '삭제할 항목이 존재하지 않습니다.'
     
-    # 챗봇 데이터에서 keyword의 임의의 description을 return 합니다.
+    # 챗봇 데이터에서 keyword의 임의의 description와 user_display, user_id를 tuple로 return 합니다.
     def get(keyword):
-        if keyword in default_chat_data:
-            return default_chat_data[keyword]
-        elif keyword in chat:
-            return 
+        chat=study.load()
+        if keyword in chat:
+            idx=random.randint(0,len(chat[keyword]))
+            return chat[keyword][idx]['description'], chat[keyword][idx]['user_display'], chat[keyword][idx]['user_id']
+        else:
+            return None, None, None

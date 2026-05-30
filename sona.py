@@ -36,7 +36,7 @@ class study():
             study.save(chat)
         else:return failure_chat_text
 
-    # 챗봇 데이터에 존제하는 keyword의 index번째 항목을 삭제합니다. 없을 경우 -를 return 합니다.
+    # 챗봇 데이터에 존제하는 keyword의 index번째 항목을 삭제합니다. 없을 경우 -를 return 합니다. 또한 index는 python의 인덱스방식을 따릅니다(0부터 시작)
     def delete_keyword(keyword: str, index: int):
         chat=study.load()
         if len(chat[keyword])<index:

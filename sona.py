@@ -36,13 +36,15 @@ class study():
             study.save(chat)
         else:return failure_chat_text
 
+    # 챗봇 데이터에 존제하는 keyword의 index번째 항목을 삭제합니다. 없을 경우 -를 return 합니다.
     def delete_keyword(keyword: str, index: int):
         chat=study.load()
         if len(chat[keyword])<index:
             del chat[keyword][index]
             return f'{keyword}의 {index}번째 항목을 삭제하였습니다.'
         else:return '삭제할 항목이 존재하지 않습니다.'
-
+    
+    # 챗봇 데이터에서 keyword의 임의의 description을 return 합니다.
     def get(keyword):
         if keyword in default_chat_data:
             return default_chat_data[keyword]

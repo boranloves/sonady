@@ -1,0 +1,22 @@
+[build-system]
+require = ['setuptools>=61','logging']
+build-backend='setuptools.build_meta'
+
+[project]
+name='sonady'
+version='1.0.0'
+authors=[
+    { name='boran', email='boran@beyonds.dev' }
+]
+description='쉽고 빠르게 챗봇을 만들다. sonady.'
+readme='README.md'
+requires-python = '>=3.8'
+classifiers=[
+ 'Programming Language :: Python :: 3',
+ 'License :: OSI Approved :: MIT License',
+ 'Operating System :: OS Independent'   
+]
+
+[project.urls]
+Homepage = 'https://github.com/boranloves/sonady'
+Issues = 'https://github.com/boranloves/sonady'

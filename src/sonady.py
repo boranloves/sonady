@@ -12,7 +12,7 @@ failure_chat_text_r=''
 max_study_count_r=0
 study_return_format_r=''
 study_return_format_data_r=''
-study_ban_word_r=set()
+study_ban_word_r=[]
 
 class study():
     # sonady 사용전 설정해야 할 옵션을 설정합니다.

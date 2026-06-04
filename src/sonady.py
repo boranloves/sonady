@@ -6,21 +6,22 @@ global failure_chat_text_r # study.study() 에서 예외(ex: @등 금지 단어 
 global max_study_count_r # 한 keyword 당 포함될 수 있는 최대 description 개수 입니다.
 global study_return_format_r # study.study()가 정상 수행된 후 return 하는 str의 포멧을 설정합니다.
 global study_return_format_data_r
-global study_ban_word
+global study_ban_word_r
 
 failure_chat_text_r=''
 max_study_count_r=0
 study_return_format_r=''
 study_return_format_data_r=''
-study_ban_word=set()
+study_ban_word_r=set()
 
 class study():
     # sonady 사용전 설정해야 할 옵션을 설정합니다.
-    def lunch(failure_chat_text='', max_study_count=3, study_return_format='', study_return_format_data='', study_ban_word: set=set()):
+    def lunch(failure_chat_text='', max_study_count=3, study_return_format='', study_return_format_data='', study_ban_word: list=[]):
         failure_chat_text_r=failure_chat_text
         max_study_count_r=max_study_count
         study_return_format_r=study_return_format
         study_return_format_data_r=study_return_format_data
+        study_ban_word_r=study_ban_word
         logging.debug('sonady was lunched')
         
     # 저장된 챗봇 데이터를 불러옵니다. 이 함수를 통한 접근을 추천하지 않습니다.
@@ -36,8 +37,9 @@ class study():
     # 챗봇 데이터에 단어와 설명을 추가합니다.
     def study(keyword: str, description: str, user_id: int, user_name: str):
         chat=study.load()
-        if '@' in description or 'https://' in description or 'http://' in description or 'discord.gg' in description or 'discord.com' in description:
-            return failure_chat_text_r
+        for p in study_ban_word_r:
+            if p in keyword or p in description:
+                return failure_chat_text_r
         if keyword not in chat:chat[keyword]=[]
         if len(chat[keyword]) < max_study_count_r:
             chat[keyword].append(

@@ -1,6 +1,6 @@
 import json, random, logging
 
-logging.basicConfig(filename='sona.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s:%(message)',datefmt="%m/%d/%Y %I%S %p", filemode='w')
+logging.basicConfig(filename='sonady.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s:%(message)',datefmt="%m/%d/%Y %I%S %p", filemode='w')
 
 global failure_chat_text_r # study.study() 에서 예외(ex: @등 금지 단어 포함, 한 keyword당 포함될 수 있는 description 개수 초과등)
 global max_study_count_r # 한 keyword 당 포함될 수 있는 최대 description 개수 입니다.

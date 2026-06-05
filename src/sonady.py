@@ -5,7 +5,7 @@ logging.basicConfig(filename='sonady.log', level=logging.DEBUG, format='%(asctim
 global failure_chat_text_r # study.study() 에서 예외(ex: @등 금지 단어 포함, 한 keyword당 포함될 수 있는 description 개수 초과등)
 global max_study_count_r # 한 keyword 당 포함될 수 있는 최대 description 개수 입니다.
 global study_return_format_r # study.study()가 정상 수행된 후 return 하는 str의 포멧을 설정합니다.
-global study_return_format_data_r
+global study_return_format_data_r # study.
 global study_ban_word_r
 
 failure_chat_text_r=''
@@ -46,7 +46,13 @@ def study_save(chat):
 def study(keyword: str, description: str, user_id: int, user_name: str):
     '''단어와 설명을 입력받아 데이터베이스에 저장합니다.
     Args:
-        keyword (str):sonadt.say에서 keyword를  
+        keyword (str): 데이터베이스에 추가할 단어입니다.
+        description (str): 데이터베이스에 추가할 단어의 설명입니다.
+        user_id (int): 데이터 베이스에 저장할 user_id입니다.
+        user_name (str): 데이터 베이스에 저장할 display_name입니다.
+
+    Return:
+        데이터 베이스에 keyword를 성공적으로 저장했을시 
     '''
     chat=study.load()
     for p in study_ban_word_r:
@@ -62,6 +68,7 @@ def study(keyword: str, description: str, user_id: int, user_name: str):
             }
         )
         study_save(chat)
+        return study_return_format_r
     else:return failure_chat_text_r
 
 # 챗봇 데이터에 존제하는 keyword의 index번째 항목을 삭제합니다. 없을 경우 -를 return 합니다. 또한 index는 python의 인덱스방식을 따릅니다(0부터 시작)
@@ -74,9 +81,21 @@ def delete_keyword(keyword: str, index: int):
     
 # 챗봇 데이터에서 keyword의 임의의 description와 user_display, user_id를 tuple로 return 합니다.
 def say(keyword):
+    '''
+    데이터 베이스에 저장된 단어 정보를 불러옵니다.
+
+    Args:
+        keyword (str): 데이터 베이스에서 불러올 단어입니다.
+
+    Return:
+        (tuple)
+        데이터 베이스에 keyword가 존재한다면 keyword에 들어있는 임의의 description과 study_return_format을 Tuple로 Return 합니다.
+        만약 데이터 베이스에 keyword가 존재하지 않는다면 빈 문자열을 Tuple로 Return 합니다. 
+    '''
     chat=study.load()
     if keyword in chat:
         idx=random.randint(0,len(chat[keyword]))
-        return chat[keyword][idx]['description'], chat[keyword][idx]['user_display'], chat[keyword][idx]['user_id']
+        info = study_return_format_r.replace('*user_id*', chat[keyword][idx]['user_id']).replace('*display_name', chat[keyword][idx]['user_display'])
+        return chat[keyword][idx]['description'], info
     else:
-        return None, None, None
+        return '', ''
